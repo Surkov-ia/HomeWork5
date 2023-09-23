@@ -1,17 +1,14 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PhoneBook {
-    private HashMap<String, List<String>> map = new HashMap<>();
+    private HashMap<String, HashSet<String>> map = new HashMap<>();
 
     void add(String phoneNum, String name) {
         if (map.containsKey(name)) {
-            List<String> phoneNumbers = map.get(name);
+            HashSet<String> phoneNumbers = map.get(name);
             phoneNumbers.add(phoneNum);
         } else {
-            List<String> phoneNumbers = new ArrayList<>();
+            HashSet<String> phoneNumbers = new HashSet<>();
             phoneNumbers.add(phoneNum);
             map.put(name, phoneNumbers);
         }
@@ -19,8 +16,8 @@ public class PhoneBook {
 
     String getPhoneNum(String phoneNum) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-            List<String> phoneNumbers = entry.getValue();
+        for (Map.Entry<String, HashSet<String>> entry : map.entrySet()) {
+            HashSet<String> phoneNumbers = entry.getValue();
             if (phoneNumbers.contains(phoneNum)) {
                 stringBuilder.append(entry.getKey());
                 stringBuilder.append(" -> ");
@@ -34,7 +31,7 @@ public class PhoneBook {
     String getByName(String name) {
         StringBuilder stringBuilder = new StringBuilder();
         if (map.containsKey(name)) {
-            List<String> phoneNumbers = map.get(name);
+            HashSet<String> phoneNumbers = map.get(name);
             for (String phoneNumber : phoneNumbers) {
                 stringBuilder.append(phoneNumber);
                 stringBuilder.append(" -> ");
@@ -47,10 +44,10 @@ public class PhoneBook {
 
     String getAll() {
         StringBuilder stringBuilder = new StringBuilder();
-        List<Map.Entry<String, List<String>>> entries = new ArrayList<>(map.entrySet());
+        List<Map.Entry<String, HashSet<String>>> entries = new ArrayList<>(map.entrySet());
         entries.sort((entry1, entry2) -> Integer.compare(entry2.getValue().size(), entry1.getValue().size()));
-        for (Map.Entry<String, List<String>> entry : entries) {
-            List<String> phoneNumbers = entry.getValue();
+        for (Map.Entry<String, HashSet<String>> entry : entries) {
+            HashSet<String> phoneNumbers = entry.getValue();
             stringBuilder.append(entry.getKey());
             stringBuilder.append(" -> ");
             stringBuilder.append(phoneNumbers);
